@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Veículos</title>
+</head>
+<body>
+    <h2>Veículos</h2>
+
+    <a href="/veiculo_novo">Novo Veículo</a>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th><th>ID Cliente</th><th>Marca</th><th>Modelo</th><th>Ano</th><th>Ações</th>
+        </tr>
+
+        {% for v in lista %}
+        <tr>
+            <td>{{ v.idveiculo }}</td>
+            <td>{{ v.idcliente }}</td>
+            <td>{{ v.marca }}</td>
+            <td>{{ v.modelo }}</td>
+            <td>{{ v.ano }}</td>
+            <td>
+                <a href="/veiculo_del/{{ v.idveiculo }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nova OS</title>
+</head>
+<body>
+    <h2>Nova Ordem de Serviço</h2>
+
+    <form method="post">
+        <label>ID OS:</label>
+        <input type="number" name="idordemservico" required><br><br>
+
+        <label>ID Veículo:</label>
+        <input type="number" name="idveiculo" required><br><br>
+
+        <label>Prazo:</label>
+        <input type="date" name="prazo" required><br><br>
+
+        <label>Defeito:</label>
+        <input type="text" name="defeito" required minlength="3"><br><br>
+
+        <label>Valor Total:</label>
+        <input type="number" name="valortotal" required><br><br>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <br>
+    <a href="/os">Voltar</a>
+</body>
+</html>

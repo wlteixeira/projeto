@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ordens de Serviço</title>
+</head>
+<body>
+    <h2>Ordens de Serviço</h2>
+
+    <a href="/os_nova">Nova OS</a>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th><th>ID Veículo</th><th>Prazo</th><th>Defeito</th><th>Valor Total</th><th>Ações</th>
+        </tr>
+
+        {% for o in lista %}
+        <tr>
+            <td>{{ o.idordemservico }}</td>
+            <td>{{ o.idveiculo }}</td>
+            <td>{{ o.prazo }}</td>
+            <td>{{ o.defeito }}</td>
+            <td>{{ o.valortotal }}</td>
+            <td>
+                <a href="/os_del/{{ o.idordemservico }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

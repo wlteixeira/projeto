@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Novo Cliente</title>
+</head>
+<body>
+    <h2>Novo Cliente</h2>
+
+    <form method="post">
+        <label>ID:</label>
+        <input type="number" name="idcliente" required><br><br>
+
+        <label>Nome:</label>
+        <input type="text" name="nome" required minlength="3"><br><br>
+
+        <label>Endereço:</label>
+        <input type="text" name="endereco" required><br><br>
+
+        <label>Telefone:</label>
+        <input type="text" name="telefone" required pattern="[0-9\-]{8,14}"><br><br>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <br>
+    <a href="/clientes">Voltar</a>
+</body>
+</html>
