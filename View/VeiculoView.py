@@ -5,11 +5,6 @@ from Model.Veiculo import Veiculo
 def init_veiculo_routes(app, db):
     dao = VeiculoDao(db)
 
-    @app.route('/')
-    def index():
-        return render_template("index.html")
-
-
     @app.route('/veiculos')
     def veiculos():
         lista = dao.listar()

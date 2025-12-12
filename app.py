@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from View.VeiculoView import init_veiculo_routes
 from View.ClienteView import init_cliente_routes
 from View.OrdemServiçoView import init_os_routes
+from View.IndexView import init_index_routes
 
 def create_app():
     app = Flask(__name__)
@@ -11,6 +12,7 @@ def create_app():
     db = MySQL(app)
 
     init_cliente_routes(app, db)
+    init_index_routes(app,db)
     init_os_routes(app, db)
     init_veiculo_routes(app, db)
     return app, db

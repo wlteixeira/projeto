@@ -5,10 +5,6 @@ from Model.OrdemServico import OrdemServico
 
 def init_os_routes(app,db):
     dao = OrdemServicoDao(db)
-    @app.route('/')
-    def index():
-        return render_template("index.html")
-
 
     @app.route('/os')
     def os_listar():

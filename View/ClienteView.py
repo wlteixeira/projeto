@@ -7,10 +7,6 @@ def init_cliente_routes(app, db):
     dao = ClienteDao(db)
 
 
-    @app.route('/')
-    def index():
-        return render_template("index.html")
-
     @app.route('/clientes')
     def clientes():
         lista = dao.listar()
