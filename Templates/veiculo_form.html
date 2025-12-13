@@ -8,10 +8,15 @@
 
     <form method="post">
         <label>ID:</label>
-        <input type="number" name="idveiculo" required><br><br>
+        <input type="number" name="idveiculo" ><br><br>
 
-        <label>ID Cliente:</label>
-        <input type="number" name="idcliente" required><br><br>
+        <label>Cliente:</label>
+        <select name="idcliente" required>
+            {% for c in clientes %}
+              <option value="{{ c.idcliente }}">{{ c.nome }}</option>
+            {% endfor %}
+          </select>
+          <br><br>
 
         <label>Marca:</label>
         <input type="text" name="marca" required><br><br>

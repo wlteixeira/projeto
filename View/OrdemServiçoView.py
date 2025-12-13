@@ -15,12 +15,20 @@ def init_os_routes(app,db):
     @app.route('/os_nova', methods=["GET", "POST"])
     def os_nova():
         if request.method == "POST":
+            idos = request.form.get('idordemservico')
+            idordemservico = int(idos) if idos else None
+
+            idveiculo = int(request.form['idveiculo'])
+            prazo = request.form['prazo']
+            defeito = request.form['defeito']
+            valortotal = request.form['valortotal']
+
             o = OrdemServico(
-                request.form['idordemservico'],
-                request.form['idveiculo'],
-                request.form['prazo'],
-                request.form['defeito'],
-                request.form['valortotal']
+                idordemservico,
+                idveiculo,
+                prazo,
+                defeito,
+                valortotal
             )
             dao.salvar(o)
             return redirect('/os')

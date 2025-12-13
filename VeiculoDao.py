@@ -1,7 +1,7 @@
 from Model.Veiculo import Veiculo
 
 SQL_SELECT_VEICULO = 'SELECT * FROM veiculo'
-SQL_INSERT_VEICULO = 'INSERT INTO veiculo VALUES (%s, %s, %s, %s, %s)'
+SQL_INSERT_VEICULO = 'INSERT INTO veiculo (idcliente, marca, modelo, ano) VALUES (%s, %s, %s, %s)'
 SQL_DELETE_VEICULO = 'DELETE FROM veiculo WHERE idveiculo = %s'
 SQL_SELECT_VEICULO_ID = 'SELECT * FROM veiculo WHERE idveiculo = %s'
 SQL_UPDATE_VEICULO = ('UPDATE veiculo SET idcliente = %s, marca = %s, modelo = %s, ano = %s WHERE idveiculo = %s')
@@ -14,11 +14,11 @@ class VeiculoDao:
 
     def salvar(self, v):
         cursor = self.__db.connection.cursor()
-        if v.idveiculo is None:
+        if not v.idveiculo:
             cursor.execute(SQL_INSERT_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano))
             v.idveiculo = cursor.lastrowid
         else:
-            cursor.execute(SQL_UPDATE_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano))
+            cursor.execute(SQL_UPDATE_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano, v.idveiculo))
         
         self.__db.connection.commit()
         return v
@@ -45,13 +45,13 @@ class VeiculoDao:
         cursor.execute(SQL_DELETE_VEICULO, (id,))
         self.__db.connection.commit()
 
-    def __traduz_veiculo(self, tupla):
-        v = Veiculo(tupla[0], tupla[1], tupla[2], tupla[3])
+    def traduz_veiculo(self, tupla):
+        v = Veiculo(tupla[0], tupla[1], tupla[2], tupla[3], tupla[4])
         return v
     
     def traduz_veiculos(self, tuplas):
         lista_veiculos =[]
         for t in tuplas:
-            veiculo = self.__traduz_veiculo(t)
+            veiculo = self.traduz_veiculo(t)
             lista_veiculos.append(veiculo)
         return lista_veiculos

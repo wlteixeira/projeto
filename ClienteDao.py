@@ -2,7 +2,7 @@ from Model.Cliente import Cliente
 
 SQL_SELECT_CLIENTE = 'SELECT * FROM cliente'
 SQL_SELECT_CLIENTE_ID = 'SELECT * FROM cliente WHERE idcliente = %s'
-SQL_INSERT_CLIENTE = 'INSERT INTO cliente (idcliente, nome, endereco, telefone) VALUES (%s, %s, %s, %s)'
+SQL_INSERT_CLIENTE = 'INSERT INTO cliente (nome, endereco, telefone) VALUES (%s, %s, %s)'
 SQL_DELETE_CLIENTE = 'DELETE FROM cliente WHERE idcliente = %s'
 SQL_UPDATE_CLIENTE = ('UPDATE cliente SET nome = %s, endereco = %s, telefone = %s WHERE idcliente = %s')
 
@@ -46,13 +46,13 @@ class ClienteDao:
         cursor.execute(SQL_DELETE_CLIENTE, (id,))
         self.__db.connection.commit()
 
-    def __traduz_cliente(self, tupla):
+    def traduz_cliente(self, tupla):
         cliente = Cliente(tupla[0], tupla[1], tupla[2], tupla[3])
         return cliente
     
     def traduz_clientes(self, tuplas):
         lista_clientes =[]
         for t in tuplas:
-            cliente = self.__traduz_cliente(t)
+            cliente = self.traduz_cliente(t)
             lista_clientes.append(cliente)
         return lista_clientes

@@ -16,13 +16,21 @@ def init_cliente_routes(app, db):
     @app.route('/cliente_novo', methods=["GET", "POST"])
     def cliente_novo():
         if request.method == "POST":
-            c = Cliente(
-                request.form['idcliente'],
-                request.form['nome'],
-                request.form['endereco'],
-                request.form['telefone']
+            id = request.form.get('idcliente')  
+
+            if id:
+                id = int(id)
+            else:
+                id = None
+
+            cliente = Cliente(
+                idcliente=id,
+                nome=request.form.get('nome'),
+                endereco=request.form.get('endereco'),
+                telefone=request.form.get('telefone')
             )
-            dao.salvar(c)
+
+            dao.salvar(cliente)
             return redirect('/clientes')
 
         return render_template("cliente_form.html")
