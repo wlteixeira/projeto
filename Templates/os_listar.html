@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ordens de Serviço</title>
-</head>
-<body>
-    <h2>Ordens de Serviço</h2>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <a href="/os_nova">Nova OS</a>
+<h2>Ordens de Serviço</h2>
 
-    <table border="1" cellpadding="5">
+<a href="/os_nova" class="btn btn-primary mb-3">Nova OS</a>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
         <tr>
-            <th>ID</th><th>ID Veículo</th><th>Prazo</th><th>Defeito</th><th>Valor Total</th><th>Ações</th>
+            <th>ID</th>
+            <th>ID Veículo</th>
+            <th>Prazo</th>
+            <th>Defeito</th>
+            <th>Valor</th>
+            <th>Ações</th>
         </tr>
+    </thead>
 
-        {% for o in lista %}
+    <tbody>
+    {% for o in lista %}
         <tr>
             <td>{{ o.idordemservico }}</td>
             <td>{{ o.idveiculo }}</td>
@@ -21,12 +26,13 @@
             <td>{{ o.defeito }}</td>
             <td>{{ o.valortotal }}</td>
             <td>
-                <a href="/os_del/{{ o.idordemservico }}">Excluir</a>
+                <a href="/os_del/{{ o.idordemservico }}" class="btn btn-danger btn-sm">Excluir</a>
+                <a href="/os_editar/{{ o.idordemservico }}" class="btn btn-warning btn-sm">Editar</a>
+
             </td>
         </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="/">Voltar</a>
-</body>
-</html>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from OrdemServicoDao import OrdemServicoDao
 from Model.OrdemServico import OrdemServico
-
+from VeiculoDao import VeiculoDao
 
 def init_os_routes(app,db):
     dao = OrdemServicoDao(db)
@@ -15,8 +15,12 @@ def init_os_routes(app,db):
     @app.route('/os_nova', methods=["GET", "POST"])
     def os_nova():
         if request.method == "POST":
-            idos = request.form.get('idordemservico')
-            idordemservico = int(idos) if idos else None
+            idordemservico = request.form.get('idordemservico')  
+
+            if idordemservico:
+                idordemservico = int(idordemservico)
+            else:
+                idordemservico = None
 
             idveiculo = int(request.form['idveiculo'])
             prazo = request.form['prazo']
@@ -32,9 +36,25 @@ def init_os_routes(app,db):
             )
             dao.salvar(o)
             return redirect('/os')
+        veiculos= VeiculoDao(db).listar()
+        return render_template("os_form.html", veiculos=veiculos)
+    
+    @app.route('/os_editar/<int:id>', methods=['GET','POST'])
+    def os_editar(id):
+        if request.method == 'POST':
+            os = OrdemServico(
+                id,
+                request.form['idveiculo'],
+                request.form['prazo'],
+                request.form['defeito'],
+                request.form['valortotal']
+            )
+            dao.atualizar(os)
+            return redirect('/os')
 
-        return render_template("os_form.html")
-
+        os = dao.listar_por_id(id)
+        veiculos = VeiculoDao(db).listar()
+        return render_template('os_form.html', os=os, veiculos=veiculos)
 
     @app.route('/os_del/<int:id>')
     def os_del(id):

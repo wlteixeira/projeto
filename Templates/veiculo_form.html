@@ -1,36 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Novo Veículo</title>
-</head>
-<body>
-    <h2>Novo Veículo</h2>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <form method="post">
-        <label>ID:</label>
-        <input type="number" name="idveiculo" ><br><br>
+<h2>{% if veiculo %}Editar Veículo{% else %}Novo Veículo{% endif %}</h2>
 
-        <label>Cliente:</label>
-        <select name="idcliente" required>
+<form method="post" class="card p-4 shadow-sm">
+
+    <div class="mb-3">
+        <label>Cliente</label>
+        <select name="idcliente" class="form-select" required>
             {% for c in clientes %}
-              <option value="{{ c.idcliente }}">{{ c.nome }}</option>
+                <option value="{{ c.idcliente }}"
+                    {% if veiculo and veiculo.idcliente == c.idcliente %}selected{% endif %}>
+                    {{ c.nome }}
+                </option>
             {% endfor %}
-          </select>
-          <br><br>
+        </select>
+    </div>
 
-        <label>Marca:</label>
-        <input type="text" name="marca" required><br><br>
+    <div class="mb-3">
+        <label>Marca</label>
+        <input type="text" name="marca" class="form-control"
+               value="{{ veiculo.marca if veiculo else '' }}" required>
+    </div>
 
-        <label>Modelo:</label>
-        <input type="text" name="modelo" required><br><br>
+    <div class="mb-3">
+        <label>Modelo</label>
+        <input type="text" name="modelo" class="form-control"
+               value="{{ veiculo.modelo if veiculo else '' }}" required>
+    </div>
 
-        <label>Ano:</label>
-        <input type="number" name="ano" required min="1900" max="2100"><br><br>
+    <div class="mb-3">
+        <label>Ano</label>
+        <input type="number" name="ano" class="form-control"
+               value="{{ veiculo.ano if veiculo else '' }}" required>
+    </div>
 
-        <button type="submit">Salvar</button>
-    </form>
+    <button class="btn btn-success">Salvar</button>
+    <a href="/veiculos" class="btn btn-secondary">Voltar</a>
+</form>
 
-    <br>
-    <a href="/veiculos">Voltar</a>
-</body>
-</html>
+{% endblock %}

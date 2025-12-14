@@ -14,14 +14,15 @@ class VeiculoDao:
 
     def salvar(self, v):
         cursor = self.__db.connection.cursor()
-        if not v.idveiculo:
-            cursor.execute(SQL_INSERT_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano))
-            v.idveiculo = cursor.lastrowid
-        else:
-            cursor.execute(SQL_UPDATE_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano, v.idveiculo))
-        
+        cursor.execute(SQL_INSERT_VEICULO, (v.idcliente, v.marca, v.modelo, v.ano))
+        v.idveiculo = cursor.lastrowid
         self.__db.connection.commit()
         return v
+    
+    def atualizar(self, v):
+        cursor = self.__db.connection.cursor()
+        cursor.execute(SQL_UPDATE_VEICULO,(v.idcliente, v.marca, v.modelo, v.ano, v.idveiculo))
+        self.__db.connection.commit()
 
 
     def listar(self):

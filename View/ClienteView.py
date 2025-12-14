@@ -34,6 +34,22 @@ def init_cliente_routes(app, db):
             return redirect('/clientes')
 
         return render_template("cliente_form.html")
+    
+    @app.route('/cliente_editar/<int:id>', methods=['GET','POST'])
+    def cliente_editar(id):
+        if request.method == 'POST':
+            c = Cliente(
+                id,
+                request.form['nome'],
+                request.form['endereco'],
+                request.form['telefone']
+            )
+            dao.atualizar(c)
+            return redirect('/clientes')
+
+        cliente = dao.listar_por_id(id)
+        return render_template('cliente_form.html', cliente=cliente)
+
 
 
     @app.route('/cliente_del/<int:id>')

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sistema Mecânica</title>
-</head>
-<body>
-    <h1>Sistema Mecânica</h1>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <a href="/clientes">Clientes</a><br><br>
-    <a href="/veiculos">Veículos</a><br><br>
-    <a href="/os">Ordens de Serviço</a><br><br>
-</body>
-</html>
+<div class="text-center p-5 bg-white rounded shadow">
+    <h1 class="mb-4">Sistema de Mecânica</h1>
+
+    <a href="/clientes" class="btn btn-primary btn-lg m-2">Clientes</a>
+    <a href="/veiculos" class="btn btn-secondary btn-lg m-2">Veículos</a>
+    <a href="/os" class="btn btn-success btn-lg m-2">Ordens de Serviço</a>
+</div>
+
+{% endblock %}
+

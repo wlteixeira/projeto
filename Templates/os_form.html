@@ -1,31 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Nova OS</title>
-</head>
-<body>
-    <h2>Nova Ordem de Serviço</h2>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <form method="post">
-        <label>ID OS:</label>
-        <input type="number" name="idordemservico" required><br><br>
+<h2>{% if os %}Editar Ordem de Serviço{% else %}Nova Ordem de Serviço{% endif %}</h2>
 
-        <label>ID Veículo:</label>
-        <input type="number" name="idveiculo" required><br><br>
+<form method="post" class="card p-4 shadow-sm">
 
-        <label>Prazo:</label>
-        <input type="date" name="prazo" required><br><br>
+    <div class="mb-3">
+        <label>Veículo</label>
+        <select name="idveiculo" class="form-select" required>
+            {% for v in veiculos %}
+                <option value="{{ v.idveiculo }}"
+                    {% if os and os.idveiculo == v.idveiculo %}selected{% endif %}>
+                    {{ v.marca }} {{ v.modelo }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
 
-        <label>Defeito:</label>
-        <input type="text" name="defeito" required minlength="3"><br><br>
+    <div class="mb-3">
+        <label>Prazo</label>
+        <input type="date" name="prazo" class="form-control"
+               value="{{ os.prazo if os else '' }}" required>
+    </div>
 
-        <label>Valor Total:</label>
-        <input type="number" name="valortotal" required><br><br>
+    <div class="mb-3">
+        <label>Defeito</label>
+        <input type="text" name="defeito" class="form-control"
+               value="{{ os.defeito if os else '' }}" required>
+    </div>
 
-        <button type="submit">Salvar</button>
-    </form>
+    <div class="mb-3">
+        <label>Valor Total</label>
+        <input type="number" name="valortotal" class="form-control"
+               value="{{ os.valortotal if os else '' }}" required>
+    </div>
 
-    <br>
-    <a href="/os">Voltar</a>
-</body>
-</html>
+    <button class="btn btn-success">Salvar</button>
+    <a href="/os" class="btn btn-secondary">Voltar</a>
+</form>
+
+{% endblock %}

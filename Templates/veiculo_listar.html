@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Veículos</title>
-</head>
-<body>
-    <h2>Veículos</h2>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <a href="/veiculo_novo">Novo Veículo</a>
+<h2>Veículos</h2>
 
-    <table border="1" cellpadding="5">
+<a href="/veiculo_novo" class="btn btn-primary mb-3">Novo Veículo</a>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
         <tr>
-            <th>ID</th><th>ID Cliente</th><th>Marca</th><th>Modelo</th><th>Ano</th><th>Ações</th>
+            <th>ID</th>
+            <th>ID Cliente</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Ano</th>
+            <th>Ações</th>
         </tr>
+    </thead>
 
-        {% for v in lista %}
+    <tbody>
+    {% for v in lista %}
         <tr>
             <td>{{ v.idveiculo }}</td>
             <td>{{ v.idcliente }}</td>
@@ -21,12 +26,12 @@
             <td>{{ v.modelo }}</td>
             <td>{{ v.ano }}</td>
             <td>
-                <a href="/veiculo_del/{{ v.idveiculo }}">Excluir</a>
+                <a href="/veiculo_del/{{ v.idveiculo }}" class="btn btn-danger btn-sm">Excluir</a>
+                <a href="/veiculo_editar/{{ v.idveiculo }}" class="btn btn-warning btn-sm">Editar</a>
             </td>
         </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="/">Voltar</a>
-</body>
-</html>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

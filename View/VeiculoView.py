@@ -32,6 +32,23 @@ def init_veiculo_routes(app, db):
         
         clientes = ClienteDao(db).listar()
         return render_template("veiculo_form.html", clientes=clientes)
+    
+    @app.route('/veiculo_editar/<int:id>', methods=['GET','POST'])
+    def veiculo_editar(id):
+        if request.method == 'POST':
+            v = Veiculo(
+                id,
+                request.form['idcliente'],
+                request.form['marca'],
+                request.form['modelo'],
+                request.form['ano']
+            )
+            dao.atualizar(v)
+            return redirect('/veiculos')
+
+        veiculo = dao.listar_por_id(id)
+        clientes = ClienteDao(db).listar()
+        return render_template('veiculo_form.html', veiculo=veiculo, clientes=clientes)
 
 
     @app.route('/veiculo_del/<int:id>')

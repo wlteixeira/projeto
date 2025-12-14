@@ -1,28 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Novo Cliente</title>
-</head>
-<body>
-    <h2>Novo Cliente</h2>
+{% extends "base.html" %}
+{% block conteudo %}
 
-    <form method="post">
-        <label>ID(SOMENTE PARA EDIÇAO):</label>
-        <input type="number" name="idcliente" ><br><br>
+<h2>Cliente</h2>
 
-        <label>Nome:</label>
-        <input type="text" name="nome" required minlength="3"><br><br>
+<form method="post" class="card p-4 shadow-sm">
 
-        <label>Endereço:</label>
-        <input type="text" name="endereco" required><br><br>
+    {% if cliente %}
+        <h4>Editar Cliente</h4>
+    {% else %}
+        <h4>Novo Cliente</h4>
+    {% endif %}
 
-        <label>Telefone:</label>
-        <input type="text" name="telefone" required pattern="[0-9\-]{8,14}"><br><br>
+    <div class="mb-3">
+        <label>Nome</label>
+        <input type="text" name="nome" class="form-control"
+               value="{{ cliente.nome if cliente else '' }}" required>
+    </div>
 
-        <button type="submit">Salvar</button>
-    </form>
+    <div class="mb-3">
+        <label>Endereço</label>
+        <input type="text" name="endereco" class="form-control"
+               value="{{ cliente.endereco if cliente else '' }}" required>
+    </div>
 
-    <br>
-    <a href="/clientes">Voltar</a>
-</body>
-</html>
+    <div class="mb-3">
+        <label>Telefone</label>
+        <input type="text" name="telefone" class="form-control"
+               value="{{ cliente.telefone if cliente else '' }}" required>
+    </div>
+
+    <button class="btn btn-success">Salvar</button>
+    <a href="/clientes" class="btn btn-secondary">Voltar</a>
+</form>
+
+
+{% endblock %}

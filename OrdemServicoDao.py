@@ -2,7 +2,7 @@ from Model.OrdemServico import OrdemServico
 
 SQL_SELECT_OS = 'SELECT * FROM ordemservico'
 SQL_SELECT_OS_ID = 'SELECT * FROM ordemservico WHERE idordemservico = %s'
-SQL_INSERT_OS = 'INSERT INTO ordemservico VALUES (%s, %s, %s, %s, %s)'
+SQL_INSERT_OS = 'INSERT INTO ordemservico (idveiculo, prazo, defeito, valortotal) VALUES (%s, %s, %s, %s)'
 SQL_DELETE_OS = 'DELETE FROM ordemservico WHERE idordemservico = %s'
 SQL_UPDATE_OS = ('UPDATE ordemservico SET idveiculo = %s, prazo = %s, defeito = %s, valortotal = %s WHERE idordemservico = %s')
 
@@ -14,14 +14,15 @@ class OrdemServicoDao:
 
     def salvar(self, os):
         cursor = self.__db.connection.cursor()
-        if os.idordemservico is None:
-            cursor.execute(SQL_INSERT_OS, (os.idveiculo, os.prazo, os.defeito, os.valortotal))
-            os.idordemservico = cursor.lastrowid
-        else:
-            cursor.execute(SQL_UPDATE_OS, (os.idveiculo, os.prazo, os.defeito, os.valortotal, os.idordemservico))
-
+        cursor.execute(SQL_INSERT_OS, (os.idveiculo, os.prazo, os.defeito, os.valortotal))
+        os.idordemservico = cursor.lastrowid
         self.__db.connection.commit()
         return os
+    
+    def atualizar(self, os):
+        cursor = self.__db.connection.cursor()
+        cursor.execute(SQL_UPDATE_OS,(os.idveiculo, os.prazo, os.defeito, os.valortotal, os.idordemservico))
+        self.__db.connection.commit()
 
 
     def listar(self):
@@ -45,13 +46,13 @@ class OrdemServicoDao:
         cursor.execute(SQL_DELETE_OS, (id,))
         self.__db.connection.commit()
 
-    def __traduz_os(self, tupla):
-        os = OrdemServico(tupla[0], tupla[1], tupla[2], tupla[3])
+    def traduz_os(self, tupla):
+        os = OrdemServico(tupla[0], tupla[1], tupla[2], tupla[3], tupla[4])
         return os
     
     def traduz_oss(self, tuplas):
         lista_oss =[]
         for t in tuplas:
-            os = self.__traduz_os(t)
+            os = self.traduz_os(t)
             lista_oss.append(os)
         return lista_oss
